@@ -12,7 +12,7 @@ FROM payment;
 ```
 <br>Result: <br>
 
-![Lab 2, Q2 Result](imgage/L2Q1.png)
+![Lab 2, Q2 Result](image/L2Q1.png)
 
 <br>SQL Code for Question 2: <br>
 ```sql
