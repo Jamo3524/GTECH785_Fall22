@@ -1,1 +1,9 @@
 
+SQL code and screenshots for Lab 2 <br>
+
+SQL Code for Question 1: <br>
+```sql
+CREATE TABLE payment_bk AS
+SELECT *
+FROM payment;
+```
