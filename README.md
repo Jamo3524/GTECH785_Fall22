@@ -10,6 +10,9 @@ CREATE TABLE payment_bk AS
 SELECT *
 FROM payment;
 ```
+<br>Result: <br>
+
+![Lab 2, Q2 Result](imgage/L2Q1.png)
 
 <br>SQL Code for Question 2: <br>
 ```sql
