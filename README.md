@@ -12,7 +12,7 @@ FROM payment;
 ```
 <br>Result: <br>
 
-![Lab 2, Q2 Result](image/L2Q1.png)
+![Lab 2, Q1 Result](image/L2Q1.png)
 
 <br>SQL Code for Question 2: <br>
 ```sql
@@ -22,6 +22,9 @@ UPDATE payment
 SET refund = amount * .05
 WHERE amount > 5.00;
 ```
+<br>Result: <br>
+
+![Lab 2, Q2 Result](image/L2Q2.png)
 
 <br> SQL Code for Question 3: <br>
 ```sql
@@ -37,6 +40,9 @@ WHERE refund IS NULL;
 CREATE VIEW payment_1 AS 
 SELECT * FROM payment;
 ```
+<br>Result: <br>
+
+![Lab 2, Q3 Result](image/L2Q3.png)
 
 <br> SQL Code for Question 4: <br>
 ```sql
@@ -47,6 +53,9 @@ LEFT JOIN address ON address.address_id = customer.address_id
 LEFT JOIN city ON address.city_id = city.city_id
 LEFT JOIN country ON city.country_id = country.country_id ;
 ```
+<br>Result: <br>
+
+![Lab 2, Q4 Result](image/L2Q4.png)
 
 <br> SQL Code for Question 5: <br>
 ```sql
@@ -61,5 +70,7 @@ GROUP BY full_name
 ORDER BY total desc
 LIMIT 10;
 ```
+<br>Result: <br>
 
+![Lab 2, Q5 Result](image/L2Q5.png)
 
