@@ -2,19 +2,21 @@
 
 <b>SQL code and screenshots for Lab 3 </b><br>
 
+To add the FastFoodRestaurants.csv file into the database, I used the PGAdmin GUI to create a table, then imported the csv file, as explained in the lecture slides.<br>
+
 SQL Code for Tasks 1 & 2: <br>
 ```sql
---Adding a primary key to the restaurant table
-ALTER TABLE restaurant ADD COLUMN ID SERIAL PRIMARY KEY;
+--Adding a primary key to the fastfoodrestaurant table
+ALTER TABLE fastfoodrestaurants ADD COLUMN ID SERIAL PRIMARY KEY;
 
---Copying the restaurant table, to avoid altering any data
-CREATE TABLE restaurant_geom_geog1 AS
-SELECT  *, ST_Point(long, lat, 4326) geom, ST_Point(long, lat, 4326)::geography geog
-FROM restaurant
+--Copying the fastfoodrestaurant table, to avoid altering any data
+CREATE TABLE ffrestaurant_geom_geog AS
+SELECT  *, ST_Point(longitude, latitude, 4326) geom, ST_Point(longitude, latitude, 4326)::geography geog
+FROM fastfoodrestaurants
 ;
 
 --Resetting the id field as the primary key
-ALTER TABLE restaurant_geom_geog1 
+ALTER TABLE ffrestaurant_geom_geog 
 ADD PRIMARY KEY (id);
 ```
 <br>Result: <br>
