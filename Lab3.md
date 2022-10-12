@@ -19,7 +19,7 @@ FROM restaurant
 ALTER TABLE restaurant_geom_geog1 
 ADD PRIMARY KEY (id);
 ```
-<br>Result: <br>
+<br>Result (I couldn't display all entries on the map, so I am showing 100): <br>
 
 ![Lab 3, Task 1 & 2 Result 1](image/L3Q1_1.png)
 
