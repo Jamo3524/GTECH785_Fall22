@@ -1,16 +1,27 @@
 # GTECH785_Fall22
 
-<b>SQL code and screenshots for Lab 2 </b><br>
+<b>SQL code and screenshots for Lab 3 </b><br>
 
-SQL Code for Question 1: <br>
+SQL Code for Tasks 1 & 2: <br>
 ```sql
-CREATE TABLE payment_bk AS
-SELECT *
-FROM payment;
+--Adding a primary key to the restaurant table
+ALTER TABLE restaurant ADD COLUMN ID SERIAL PRIMARY KEY;
+
+--Copying the restaurant table, to avoid altering any data
+CREATE TABLE restaurant_geom_geog1 AS
+SELECT  *, ST_Point(long, lat, 4326) geom, ST_Point(long, lat, 4326)::geography geog
+FROM restaurant
+;
+
+--Resetting the id field as the primary key
+ALTER TABLE restaurant_geom_geog1 
+ADD PRIMARY KEY (id);
 ```
 <br>Result: <br>
 
-![Lab 2, Q1 Result](image/L2Q1.png)
+![Lab 3, Task 1 & 2 Result 1](image/L3Q1_1.png)
+
+![Lab 3, Task 1 & 2 Result 2](image/L3Q1_2.png)
 
 <br>SQL Code for Question 2: <br>
 ```sql
