@@ -35,7 +35,7 @@ LIMIT 10;
 ```
 <br>Result: <br>
 
-![Lab 3, Task 3 Result](image/L3Q2.png)
+![Lab 3, Task 3 Result](image/L3Q2.PNG)
 
 
 
