@@ -1,6 +1,4 @@
 # GTECH785_Fall22
- 
-<i>Assignments for Hunter College GTECH 78519 Geospatial Databases, Fall 2022.</i><br>
 
 <b>SQL code and screenshots for Lab 2 </b><br>
 
