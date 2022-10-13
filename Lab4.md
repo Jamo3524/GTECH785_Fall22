@@ -500,4 +500,18 @@ WHERE stusps = 'NY';
 ```
 
 Result:<br>
-![Lab 4, Task 1 Result](image/L4Q2_2.png)
+![Lab 4, Task 2.2 Result](image/L4Q2_2.png)
+
+<br>SQL Code for Question 2.3: <br>
+```sql
+--Setting the new geometry column to UTM Zone 18N
+UPDATE ny_counties
+SET geom_utm = ST_Transform(geom, 3725);
+
+--Projecting on the fly to WGS 84 to view the basemap and verify the data
+SELECT *, ST_Transform(geom_utm, 4326) AS temp_geom_wgs
+FROM ny_counties;
+```
+
+Result:<br>
+![Lab 4, Task 2.3 Result](image/L4Q2_3.png)
