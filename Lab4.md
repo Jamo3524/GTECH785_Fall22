@@ -477,5 +477,18 @@ Screenshot of SRIDs in the spatial_ref_sys table:<br>
 
 ![Lab 4, Task 1 Result](image/L4Q1.png)
 
+<br>SQL Code for Question 2.1: <br>
+```sql
+--Loaded the shapefile into QGIS to check the coordinate system. EPSG 4269, NAD 83
+SELECT UpdateGeometrySRID('cb_2020_us_county_500k', 'geom', 4269);
+
+--Changing the CRS to WGS 84 and displaying the basemap.
+--PGAdmin crashes when I try to display all records, so I am showing 100.
+SELECT ST_Transform(geom, 4326) AS geo_wgs84
+FROM cb_2020_us_county_500k
+LIMIT 100;
+```
+Result:<br>
+![Lab 4, Task 1 Result](image/L4Q2_1.png)
 
 
