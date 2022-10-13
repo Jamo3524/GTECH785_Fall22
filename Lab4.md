@@ -512,13 +512,20 @@ ADD COLUMN geom_utm geometry;
 UPDATE ny_counties
 SET geom_utm = ST_Transform(geom, 3725);
 
+--Confirming that the new column is in UTM Zone 18N
+SELECT ST_SRID(geom_utm)
+FROM ny_counties;
+
 --Projecting on the fly to WGS 84 to view the basemap and verify the data
 SELECT *, ST_Transform(geom_utm, 4326) AS temp_geom_wgs
 FROM ny_counties;
+
 ```
 
 Result:<br>
-![Lab 4, Task 2.3 Result](image/L4Q2_3.png)
+![Lab 4, Task 2.3 Result 1](image/L4Q2_3.png)
+![Lab 4, Task 2.3 Result 2](image/L4Q2_3_2.PNG)
+![Lab 4, Task 2.3 Result 3](image/L4Q2_3_1.PNG)
 
 <br>SQL Code for Question 2.4: <br>
 ```sql
