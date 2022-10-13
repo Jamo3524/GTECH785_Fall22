@@ -519,3 +519,14 @@ FROM ny_counties;
 
 Result:<br>
 ![Lab 4, Task 2.3 Result](image/L4Q2_3.png)
+
+<br>SQL Code for Question 2.4: <br>
+```sql
+--Creating a spatial index for the NY Counties shapefile
+CREATE INDEX ny_geom_id
+ON ny_counties
+USING GIST (geom_utm);
+```
+
+Result:<br>
+![Lab 4, Task 2.3 Result](image/L4Q2_4.png)
