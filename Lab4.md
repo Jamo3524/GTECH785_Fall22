@@ -491,4 +491,13 @@ LIMIT 100;
 Result:<br>
 ![Lab 4, Task 1 Result](image/L4Q2_1.png)
 
+<br>SQL Code for Question 2.2: <br>
+```sql
+--Creating a table of NY Counties
+CREATE TABLE ny_counties AS
+SELECT * FROM cb_2020_us_county_500k
+WHERE stusps = 'NY';
+```
 
+Result:<br>
+![Lab 4, Task 1 Result](image/L4Q2_2.png)
