@@ -504,6 +504,10 @@ Result:<br>
 
 <br>SQL Code for Question 2.3: <br>
 ```sql
+--Adding a geometry column to the NY Counties shapefile
+ALTER TABLE ny_counties 
+ADD COLUMN geom_utm geometry;
+
 --Setting the new geometry column to UTM Zone 18N
 UPDATE ny_counties
 SET geom_utm = ST_Transform(geom, 3725);
