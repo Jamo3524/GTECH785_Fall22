@@ -36,9 +36,7 @@ ESRI:102004	Lambert for Contiguous US 	NAD 83	Degree	Lambert Conformal Conic	Con
 3627	SPCS Long Island	NAD 83 NSRS 2007	Meter	Lambert Conformal Conic	New York City, Nassau and Suffolk Counties
 3628	NAD83(NSRS2007) / New York Long Island (ftUS)	NAD 83 NSRS 2007	US Survey Foot	Lambert Conformal Conic	New York City, Nassau and Suffolk Counties
 
-<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
- style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
- mso-yfti-tbllook:1184;mso-padding-alt:0in 5.4pt 0in 5.4pt'>
+<table>
  <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;height:26.95pt'>
   <td width=105 valign=top style='width:78.65pt;border:solid windowtext 1.0pt;
   mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:26.95pt'>
