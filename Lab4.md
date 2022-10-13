@@ -2,7 +2,7 @@
 
 <b>SQL code and screenshots for Lab 4 </b><br>
 
-<b>Table from Task 1, SRID Lookup:</b><br>
+Table from Task 1, SRID Lookup:<br>
 
 <table>
  <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;height:26.95pt'>
@@ -473,6 +473,9 @@
  </tr>
 </table>
 
+Screenshot of SRIDs in the spatial_ref_sys table:<br>
+
+![Lab 4, Task 1 Result](image/L4Q1.png)
 
 
 
