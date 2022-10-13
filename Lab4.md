@@ -524,7 +524,9 @@ FROM ny_counties;
 
 Result:<br>
 ![Lab 4, Task 2.3 Result 1](image/L4Q2_3.png)
+
 ![Lab 4, Task 2.3 Result 2](image/L4Q2_3_2.PNG)
+
 ![Lab 4, Task 2.3 Result 3](image/L4Q2_3_1.PNG)
 
 <br>SQL Code for Question 2.4: <br>
