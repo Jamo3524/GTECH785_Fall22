@@ -28,7 +28,8 @@ FROM mappluto;
 
 --Displaying the basemaps under the county and pluto data.
 SELECT ST_Transform(geom, 4326) 
-FROM ny_counties;
+FROM ny_counties
+LIMIT 100;
 SELECT ST_Transform(geom, 4326) 
 FROM qnspluto
 LIMIT 300;
@@ -59,11 +60,29 @@ WHERE yearbuilt = 0;
 UPDATE qnspluto
 SET zipcode = NULL
 WHERE zipcode = 0;
+
+--Determining the percentage of properties with invalid zipcode or year built
+--About 3.8% of properties had an invalid value for yearbuilt
+--About 0.06% of properties had an invalid value for zipcode
+SELECT
+(SELECT count(*)
+FROM qnspluto
+WHERE yearbuilt IS NULL)::float/
+(SELECT count(*)
+FROM qnspluto)::float;
+SELECT
+(SELECT count(*)
+FROM qnspluto
+WHERE zipcode IS NULL)::float/
+(SELECT count(*)
+FROM qnspluto)::float;
 ```
 
 Results:<br>
 ![Lab 5, Task 2 Result 1](image/L5Q2.PNG)
 ![Lab 5, Task 2 Result 1](image/L5Q3.PNG)
+![Lab 5, Task 2 Result 1](image/L5Q4.PNG)
+![Lab 5, Task 2 Result 1](image/L5Q5.PNG)
 
 <br>SQL Code for Question 2.3: <br>
 ```sql
