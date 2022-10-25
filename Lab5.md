@@ -18,16 +18,52 @@ WHERE borough = 'QN';
 Result:<br>
 ![Lab 5, Task 1 Result](image/L5Q1.PNG)
 
-<br>SQL Code for Question 2.2: <br>
+<br>SQL Code for Task 2: <br>
 ```sql
---Creating a table of NY Counties
-CREATE TABLE ny_counties AS
-SELECT * FROM cb_2020_us_county_500k
-WHERE stusps = 'NY';
+--Checking the SRIDs of the geometry columns
+SELECT ST_SRID(geom_utm)
+FROM ny_counties;
+SELECT ST_SRID(geom)
+FROM mappluto;
+
+--Displaying the basemaps under the county and pluto data.
+SELECT ST_Transform(geom, 4326) 
+FROM ny_counties;
+SELECT ST_Transform(geom, 4326) 
+FROM qnspluto
+LIMIT 300;
+
+--Creating spatial indicies
+CREATE INDEX pluto_geom_id
+ON qnspluto
+USING GIST (geom);
+CREATE INDEX geom_id
+ON ny_counties
+USING GIST (geom_utm);
+
+--Checking for simple and valid polygons
+--All polygons in both shapefiles are simple and valid
+SELECT *
+FROM qnspluto
+WHERE not ST_IsSimple(geom) or not ST_IsValid(geom);
+SELECT *
+FROM ny_counties
+WHERE not ST_IsSimple(geom_utm) or not ST_IsValid(geom_utm);
+
+--Changing the year built value to NULL for buildings listed being built in year 0
+UPDATE qnspluto
+SET yearbuilt = NULL
+WHERE yearbuilt = 0;
+
+--Setting the zipcode as NULL where zipcode = 0
+UPDATE qnspluto
+SET zipcode = NULL
+WHERE zipcode = 0;
 ```
 
-Result:<br>
-![Lab 4, Task 2.2 Result](image/L4Q2_2.png)
+Results:<br>
+![Lab 5, Task 2 Result 1](image/L5Q2.PNG)
+![Lab 5, Task 2 Result 1](image/L5Q3.PNG)
 
 <br>SQL Code for Question 2.3: <br>
 ```sql
