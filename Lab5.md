@@ -126,17 +126,6 @@ Results:<br>
 ![Lab 5, Task 3 Result 1](image/L5Q6.PNG)
 ![Lab 5, Task 3 Result 2](image/L5Q7.PNG)
 ![Lab 5, Task 3 Result 3](image/L5Q8.PNG)
+![Lab 5, Task 3 Result 4](image/L5Q9.PNG)
 
 
-![Lab 4, Task 2.3 Result 1](image/L4Q2_3.png)
-
-<br>SQL Code for Question 2.4: <br>
-```sql
---Creating a spatial index for the NY Counties shapefile
-CREATE INDEX ny_geom_id
-ON ny_counties
-USING GIST (geom_utm);
-```
-
-Result:<br>
-![Lab 4, Task 2.3 Result](image/L4Q2_4.png)
