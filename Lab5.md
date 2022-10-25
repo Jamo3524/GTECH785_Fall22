@@ -80,34 +80,53 @@ FROM qnspluto)::float;
 
 Results:<br>
 ![Lab 5, Task 2 Result 1](image/L5Q2.PNG)
-![Lab 5, Task 2 Result 1](image/L5Q3.PNG)
-![Lab 5, Task 2 Result 1](image/L5Q4.PNG)
-![Lab 5, Task 2 Result 1](image/L5Q5.PNG)
+![Lab 5, Task 2 Result 2](image/L5Q3.PNG)
+![Lab 5, Task 2 Result 3](image/L5Q4.PNG)
+![Lab 5, Task 2 Result 4](image/L5Q5.PNG)
 
-<br>SQL Code for Question 2.3: <br>
+<br>SQL Code for Task 3: <br>
 ```sql
---Adding a geometry column to the NY Counties shapefile
-ALTER TABLE ny_counties 
-ADD COLUMN geom_utm geometry;
+--Calculating the size, perimeter, and age of each property
+--SRID is Long Island State Plane (Feet), so the area will be in square feet & perimeter will be in feet
+ALTER TABLE qnspluto 
+ADD COLUMN area FLOAT;
+ALTER TABLE qnspluto 
+ADD COLUMN leng FLOAT;
+ALTER TABLE qnspluto 
+ADD COLUMN age FLOAT;
+UPDATE qnspluto
+SET area = ST_Area(geom);
+UPDATE qnspluto
+SET leng = ST_Perimeter(geom);
+UPDATE qnspluto
+SET age = (2022-yearbuilt);
 
---Setting the new geometry column to UTM Zone 18N
-UPDATE ny_counties
-SET geom_utm = ST_Transform(geom, 3725);
+--Calculating mean area and assessment by zip code
+SELECT zipcode, AVG(area) as avgarea, AVG(assesstot::numeric) as avgvalue
+FROM qnspluto
+GROUP BY zipcode;
 
---Confirming that the new column is in UTM Zone 18N
-SELECT ST_SRID(geom_utm)
+--Calculating the mode of property ages
+SELECT zipcode, MODE() within GROUP(order by qnspluto.age) as modeage
+FROM qnspluto
+GROUP BY zipcode;
+
+--Calculating the median property size and median age by zipcode
+SELECT zipcode, percentile_disc(0.5) within GROUP (order by qnspluto.age) as medianage,
+percentile_disc(0.5) within GROUP (order by qnspluto.area) as mediansize
+FROM qnspluto
+GROUP BY zipcode;
+
+--Simplifying the NY county boundaries without preserving topology, with a tolerance of 200 meters
+SELECT ST_Simplify(geom_utm, 200)
 FROM ny_counties;
-
---Projecting on the fly to WGS 84 to view the basemap and verify the data
-SELECT *, ST_Transform(geom_utm, 4326) AS temp_geom_wgs
-FROM ny_counties;
-
 ```
 
-Result:<br>
-![Lab 4, Task 2.3 Result 3](image/L4Q2_3_1.PNG)
+Results:<br>
+![Lab 5, Task 3 Result 1](image/L5Q6.PNG)
+![Lab 5, Task 3 Result 2](image/L5Q7.PNG)
+![Lab 5, Task 3 Result 3](image/L5Q8.PNG)
 
-![Lab 4, Task 2.3 Result 2](image/L4Q2_3_2.PNG)
 
 ![Lab 4, Task 2.3 Result 1](image/L4Q2_3.png)
 
