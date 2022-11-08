@@ -24,58 +24,24 @@ Results:<br>
 
 <br>SQL Code for Task 2: <br>
 ```sql
---Creating a table of NYC restaurants
-CREATE TABLE nycrest AS
-SELECT * FROM nyrest WHERE
-countyname = 'Queens' OR
-countyname = 'Kings' OR
-countyname = 'Richmond' OR
-countyname = 'Bronx' OR
-countyname = 'New York';
+--Setting the SRID of the subway stations shapefile
+SELECT UpdateGeometrySRID('subwaystations', 'geom', 4326);
+SELECT Find_SRID('public', 'subwaystations', 'geom');
 
---Finding the total restaurants within 200 meters of each McDonald's in NYC
-WITH
-mcd AS (SELECT *
-FROM nycrest
-WHERE name = 'MCD')
-SELECT mcd.name, mcd.geom, count(*)-1 as mcd_200
-FROM mcd 
-JOIN nycrest as rt
-ON ST_DWithin(ST_Transform(mcd.geom, 2831), ST_Transform(rt.geom, 2831), 200)
-GROUP BY mcd.geom, mcd.name
-ORDER BY mcd_200 DESC;
-
---Finding the total restaurants within 500 meters of each McDonald's in NYC
-WITH
-mcd AS (SELECT *
-FROM nycrest
-WHERE name = 'MCD')
-SELECT mcd.name, mcd.geom, count(*)-1 as mcd_500
-FROM mcd 
-JOIN nycrest as rt
-ON ST_DWithin(ST_Transform(mcd.geom, 2831), ST_Transform(rt.geom, 2831), 500)
-GROUP BY mcd.geom, mcd.name
-ORDER BY mcd_500 DESC;
-
---Finding the total restaurants within 1000 meters of each McDonald's in NYC
-WITH
-mcd AS (SELECT *
-FROM nycrest
-WHERE name = 'MCD')
-SELECT mcd.name, mcd.geom, count(*)-1 as mcd_1000
-FROM mcd 
-JOIN nycrest as rt
-ON ST_DWithin(ST_Transform(mcd.geom, 2831), ST_Transform(rt.geom, 2831), 1000)
-GROUP BY mcd.geom, mcd.name
-ORDER BY mcd_1000 DESC;
-
+--Finding the 5 closest fast food restaurants from each subway station
+SELECT s.name, s.gid, rs.geom <-> s.geom dist, rs.name
+FROM subwaystations s
+CROSS JOIN LATERAL
+(
+SELECT r.id, r.name, r.geom
+FROM restaurant_geom_geog1 r 
+ORDER BY s.geom <-> r.geom
+LIMIT 5
+) AS rs;
 ```
 
 Results:<br>
-![Lab 6, Task 2 Result 1](image/L6Q3.PNG)
+![Lab 6, Task 2 Result 1](image/L7Q3.PNG)
 
-![Lab 6, Task 2 Result 2](image/L6Q4.PNG)
-
-![Lab 6, Task 2 Result 3](image/L6Q5.PNG)
 
 
