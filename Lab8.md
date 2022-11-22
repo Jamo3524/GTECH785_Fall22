@@ -46,24 +46,65 @@ Results:<br>
 
 <br>SQL Code for Task 2: <br>
 ```sql
---Setting the SRID of the subway stations shapefile
-SELECT UpdateGeometrySRID('subwaystations', 'geom', 4326);
-SELECT Find_SRID('public', 'subwaystations', 'geom');
+--Calculating the percant of residents with a bachelors degree or higher in Queens block groups
+--First deleting block groups with population = 0
+DELETE FROM qnsed_geo
+WHERE totalpop = 0;
 
---Finding the 5 closest fast food restaurants from each subway station
-SELECT s.name, s.gid, rs.geom <-> s.geom dist, rs.name
-FROM subwaystations s
-CROSS JOIN LATERAL
+ALTER TABLE qnsed_geo
+ADD COLUMN bachpercent double precision;
+UPDATE qnsed_geo
+SET bachpercent = bach_higher / totalpop;
+
+--Creating a spatial index on the Queens block group table
+CREATE INDEX qns_geomm_index
+ON qnsed_geo
+USING GIST (geomm);
+
+--Joining the subway station on Queens BG tables based on 200 and 500 meter buffers
+CREATE TABLE qnsed_buf AS
+WITH bg as
 (
-SELECT r.id, r.name, r.geom
-FROM restaurant_geom_geog1 r 
-ORDER BY s.geom <-> r.geom
-LIMIT 5
-) AS rs;
+	SELECT *, ST_Transform(geom, 2831) as geomm1
+	FROM qnsed_geo
+), sub_buf200 as (
+	SELECT *, ST_Buffer(ST_Transform(geom, 2831), 200) as geombuf1, ST_Buffer(ST_Transform(geom, 2831), 500) as geombuf2
+	FROM subwaystations
+)
+SELECT b2.gid, b2.name, bg.*, 
+ST_Area(ST_Intersection(b2.geombuf1, bg.geomm))/ST_Area(bg.geomm1) as dis200,
+ST_Area(ST_Intersection(b2.geombuf2, bg.geomm))/ST_Area(bg.geomm1) as dis500
+FROM sub_buf200 as b2
+JOIN bg 
+ON ST_Intersects(b2.geombuf1, bg.geomm);
+
+--Multiplying the tract percent with the population and bachelor's degree values
+ALTER TABLE qnsed_buf
+ADD COLUMN pop200 double precision, ADD COLUMN bach200 double precision,
+ADD COLUMN pop500 double precision, ADD COLUMN bach500 double precision;
+UPDATE qnsed_buf
+SET pop200 = dis200 * totalpop,
+bach200 = dis200 * bach_higher,
+pop500 = dis500 * totalpop,
+bach500 = dis500 * bach_higher;
+
+--Grouping by each subway station
+CREATE TABLE qnsed200500 as
+SELECT name, sum(pop200) as pop200sum, sum(bach200) as bach200sum,
+sum(pop500) as pop500sum, sum(bach500) as bach500sum
+FROM qnsed_buf
+GROUP BY name;
+
+--Calculating the percent of bachelor's degree or higher within 200 and 500 m of each station
+ALTER TABLE qnsed200500
+ADD COLUMN bachper200 double precision, ADD COLUMN bachper500 double precision;
+UPDATE qnsed200500
+SET bachper200 = bach200sum / pop200sum,
+bachper500 = bach500sum / pop500sum;
 ```
 
 Results:<br>
-![Lab 6, Task 2 Result 1](image/L7Q3.PNG)
+![Lab 8, Task 2 Result 1](image/L8Q2.PNG)
 
 
 
